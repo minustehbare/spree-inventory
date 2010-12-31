@@ -24,16 +24,15 @@ module InventoryManagement
           end
         end
       end
-
-      Product.class_eval do
-        has_many :product_locations, :dependent => :destroy
+      
+      Variant.class_eval do
+        has_many :variant_locations, :dependent => :destroy
         has_many :supplier_channels
         has_many :suppliers, :through => :supplier_channels
-      
+        
         has_one :default_supplier_channel, :class_name => "SupplierChannel", :conditions => "supplier_channels.is_default = 1"
-      
         has_one :default_supplier, :class_name => "Supplier", :through => :default_supplier_channel
-      
+        
         def cost_price 
           default_supplier_channel.cost if default_supplier_channel
         end

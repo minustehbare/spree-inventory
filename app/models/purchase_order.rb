@@ -30,20 +30,20 @@ class PurchaseOrder < ActiveRecord::Base
     logger.info("TODO: Send out the purchase order")
   end
 
-  def contains?(product)
-    purchase_line_items.select { |purchase_line_item| purchase_line_item.product == product }.first
+  def contains?(variant)
+    purchase_line_items.select { |purchase_line_item| purchase_line_item.variant == variant }.first
   end
 
-  def add_product(product, quantity=1)
-    current_item = contains?(product)
+  def add_variant(variant, quantity=1)
+    current_item = contains?(variant)
     if current_item
       current_item.increment_quantity unless quantity > 1
       current_item.quantity = (current_item.quantity + quantity) if quantity > 1
       current_item.save
     else
       current_item = PurchaseLineItem.new(:qty => quantity)
-      current_item.product = product
-      current_item.cost   = product.price
+      current_item.variant = variant
+      current_item.cost   = variant.price
       self.purchase_line_items << current_item
     end
 
@@ -61,7 +61,7 @@ class PurchaseOrder < ActiveRecord::Base
     self.number.parameterize.to_s.upcase
   end
   
-    def generate_order_number
+  def generate_order_number
     record = true
     while record
       random = "S#{Array.new(9){rand(9)}.join}"
@@ -70,23 +70,23 @@ class PurchaseOrder < ActiveRecord::Base
     self.number = random
   end
   
-  def self.check_if_reorder_needed(products)
-    products.each do |p| determine_reorder_method(p) if p.reorder_automatically
+  def self.check_if_reorder_needed(variants)
+    variants.each do |v| determine_reorder_method(v) if v.reorder_automatically
     end
   end
   
-  def self.determine_reorder_method(product)
-    qty = if product.reorder_method == 'fixed' 
-      product.minimum_reorder_size
-    elsif product.reorder_method == 'delta'
-      product.minimum_on_hand - product.count_on_hand
+  def self.determine_reorder_method(variant)
+    qty = if variant.reorder_method == 'fixed' 
+      variant.minimum_reorder_size
+    elsif variant.reorder_method == 'delta'
+      variant.minimum_on_hand - variant.count_on_hand
     end
-    order_more_of(product, qty)
+    order_more_of(variant, qty)
   end
   
-  def self.order_more_of(product, qty)
-    purchase_order = PurchaseOrder.find_or_create_by_supplier_and_status(product.default_supplier, 'in_progress')
-    purchase_order.add_product(product, qty)
+  def self.order_more_of(variant, qty)
+    purchase_order = PurchaseOrder.find_or_create_by_supplier_and_status(variant.default_supplier, 'in_progress')
+    purchase_order.add_variant(variant, qty)
   end
 
 end

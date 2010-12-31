@@ -3,7 +3,7 @@ class PurchaseLineItem < ActiveRecord::Base
   belongs_to :purchase_order
   belongs_to :variant
 
-  has_one :product, :through => :variant
+  #has_one :product, :through => :variant
 
   #before_validation :copy_price
   before_destroy :ensure_not_shipped
