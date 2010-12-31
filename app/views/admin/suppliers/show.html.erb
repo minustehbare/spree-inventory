@@ -1,0 +1,8 @@
+<% render :partial => 'admin/shared/purchase_order_sub_menu' %>
+
+<div id="supplier">
+  <br/>
+  <%= render :partial => 'admin/shared/supplier_details', :locals => {:supplier => @supplier} %>
+  <br/><br/>
+  <%= link_to_edit @supplier %> <%= link_to_delete @supplier %>
+</div>

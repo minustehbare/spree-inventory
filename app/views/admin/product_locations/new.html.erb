@@ -1,0 +1,36 @@
+<%= render :partial => 'admin/shared/product_sub_menu' %>
+<%= render :partial => 'admin/shared/product_tabs', :locals => {:current => "Inventory"} %>
+
+  <h2><%= t("new_product_location")%></h2>
+  <%=error_messages_for :product_location %>
+  
+  <% form_for(:product_location, :url => collection_url) do |f| %>
+
+  <div class="yui-gb">
+
+      <div class="yui-u first">    <fieldset>
+        <%- locals = {:f => f} -%>
+        <% hook :admin_product_locations_form_left, locals do %>
+          <%- f.field_container :supplier_id do -%>
+            <%= f.label :supplier_id, t("name") %> <span class="required">*</span><br />
+            <%= f.error_message_on :supplier_id %>
+          <%- end -%>
+        <% end %>
+        </fieldset>
+      </div>
+    
+      <div class="yui-u"></div>
+      <div class="yui-u"></div>
+
+    </div>
+    
+    <%= render :partial => 'admin/shared/new_resource_links' %>
+  <% end %>
+
+
+<% content_for :head do %>
+  <%= javascript_tag "var expand_variants = true;" %>
+  <%= javascript_include_tag 'admin/orders/edit.js' %>
+  <%= stylesheet_link_tag 'admin/edit_orders.css' %>
+<% end %>
+

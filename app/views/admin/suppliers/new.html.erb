@@ -1,0 +1,10 @@
+<h1>New supplier</h1>
+
+<% form_for(:supplier,  :url => collection_url, :html => { :multipart => true }) do |f| %>
+
+  <%= render :partial => 'form', :locals => {:f => f} %>
+
+  <%= render :partial => 'admin/shared/new_resource_links' %>
+
+<% end %>
+

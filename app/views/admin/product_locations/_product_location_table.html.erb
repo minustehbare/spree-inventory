@@ -1,0 +1,30 @@
+<table class="index">
+  <thead>
+  	<tr>
+  		<th><%= t("location") %></th>
+  		<th><%= t("count") -%></th>
+  		<th></th>
+  	</tr>
+  </thead>
+  <tbody>
+    <% collection.each do |product_location| %>
+      <tr id="<%= dom_id(product_location, :sel)%>">
+        <td><%= product_location.full_location_string(' &raquo; ') %></td>
+        <td><%= product_location.count || 0 -%></td>
+  	    <td class="actions">
+          <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(product_location, :rem_spinner)}" %>
+                                               
+		      <%= link_to_remote icon('delete') + ' ' + t('remove'), 
+		                         {:url => remove_admin_product_product_location_url(@product, product_location),
+		                         :loading => "jQuery('##{dom_id(product_location, :rem_spinner)}').show()",
+		                         :update => 'selected-product_locations',
+		                         :complete => "jQuery('##{dom_id(product_location, :sel)}').remove(); jQuery('##{dom_id(product_location, :rem_spinner)}').hide();"}, :class => 'iconlink' %>
+  	    </td>        
+      </tr>
+    <% end %>
+    
+    <% if collection.empty? %>
+     <tr><td colspan="3"><%= t('none') %>.</td></tr>
+    <% end %>
+  </tbody>
+</table>

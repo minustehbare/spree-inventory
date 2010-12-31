@@ -1,8 +1,7 @@
 InventoryManagement
-===================
+====================
 
 Introduction goes here.
-
 
 Example
 =======

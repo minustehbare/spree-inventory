@@ -1,0 +1,37 @@
+<%= render :partial => 'admin/shared/purchase_order_sub_menu' %>
+<%= render :partial => 'admin/shared/purchase_order_tabs', :locals => {:current => "Purchase Order Details"} %>
+
+  <h2><%= t("new_porder")%></h2>
+  <%=error_messages_for :purchase_order %>
+  
+  <% form_for(:purchase_order, :url => collection_url) do |f| %>
+
+  <div class="yui-gb">
+
+      <div class="yui-u first">    <fieldset>
+        <%- locals = {:f => f} -%>
+        <% hook :admin_purchase_orders_form_left, locals do %>
+          <%- f.field_container :supplier_id do -%>
+            <%= f.label :supplier_id, t("name") %> <span class="required">*</span><br />
+            <%= f.select :supplier_id, @suppliers,{}, :class => 'fullwidth dropdown'  %>
+            <%= f.error_message_on :supplier_id %>
+          <%- end -%>
+        <% end %>
+        </fieldset>
+      </div>
+    
+      <div class="yui-u"></div>
+      <div class="yui-u"></div>
+
+    </div>
+    
+    <%= render :partial => 'admin/shared/new_resource_links' %>
+  <% end %>
+
+
+<% content_for :head do %>
+  <%= javascript_tag "var expand_variants = true;" %>
+  <%= javascript_include_tag 'admin/orders/edit.js' %>
+  <%= stylesheet_link_tag 'admin/edit_orders.css' %>
+<% end %>
+

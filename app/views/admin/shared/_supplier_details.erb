@@ -1,0 +1,7 @@
+<h3><%= supplier.name%></h3>
+<%= supplier.address1  + "<br/>" if !supplier.address1.empty? %>
+<%= supplier.address2  + "<br/>" if !supplier.address2.empty? %>
+<%= supplier.city if !supplier.city.empty? %>, <%= supplier.state if !supplier.state.empty? %> <%= supplier.zip  + "<br/>" if !supplier.zip.empty? %>
+<%= "P: " + supplier.phone  + "<br/>" if !supplier.phone.empty? %>
+<%= "E: " + link_to(supplier.email, supplier.email)  + "<br/>" if !supplier.email.empty? %>
+<%= "F: " + supplier.fax  + "<br/>" if !supplier.fax.empty? %>

@@ -1,0 +1,59 @@
+<%=error_messages_for :line_item %>
+
+<% form_for(@purchase_order, :url => admin_purchase_order_url(@purchase_order), :html => { :method => :put}) do |f| %>
+  <%= f.hidden_field :number %>
+  <table class="index">
+    <tbody id='line-items'>
+      <tr>
+        <% hook :admin_purchase_order_form_line_items_headers do %>
+          <th><%= t('item_description') %></th>
+          <th class="price"><%= t('cost') %></th>
+          <th class="qty"><%= t('qty') %></th>
+          <th class="total"><span><%= t('total') %></span></th>
+        <% end %>
+        <th class="orders-actions"><% hook :admin_purchase_order_form_line_items_header_actions %></th>
+      </tr>
+      <% f.fields_for :purchase_line_items do |li_form| %>
+        <%= render :partial => "admin/purchase_orders/line_item", :locals => { :f => li_form } %>
+      <% end %>
+    </tbody>
+    <% hook :admin_purchase_order_form_subtotal do %>
+      <tbody id='subtotal'>
+        <tr id="subtotal-row">
+        <td></td><td></td><td></td><td></td><td></td>
+        </tr>
+      </tbody>
+    <% end %>
+    <% hook :admin_purchase_order_form_total do %>
+      <tbody id='purchase_order-total'>
+        <tr>
+          <td colspan="3"><b><%= t('order_total') %>:</b></td>
+          <td class="total"><span id="purchase_order_total"><%= number_to_currency @purchase_order.total -%></span></td>
+          <td></td>
+        </tr>
+      </tbody>
+    <% end %>
+  </table>
+
+<% hook :admin_purchase_order_form_buttons do %>
+  <p class="form-buttons">
+    <button type="submit"><span><%= t('update') %></span></button>
+    
+    <% if @purchase_order.in_progress? %>
+    <button type="submit" name="submit" value="send_out"><span><%= t('send_out') %></span></button>
+    <% elsif @purchase_order.sent? %>
+    <button type="submit" name="submit" value="receive"><span><%= t('receive') %></span></button>
+    <% end %>
+    <%= t("or") %> <%= link_to t("actions.cancel"), admin_purchase_orders_url %>
+  </p>
+<% end %>
+
+<% end %>
+
+<script type="text/javascript">
+  $('#order_tab_summary h5#order_total').html('<%= "#{t('total')}: #{number_to_currency(@purchase_order.total)}" %>');
+  $('#order_tab_summary h5#order_status').html('<%= "#{t('status')}: #{t(@purchase_order.state)}" %>');
+</script>
+
+<%= javascript_include_tag 'admin/purchase_orders/edit_form.js' %>
+

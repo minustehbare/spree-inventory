@@ -1,0 +1,36 @@
+<script type="text/javascript">
+  function displayRow(){
+    var row = document.getElementById("captionRow");
+    if (row.style.display == '') row.style.display = 'none';
+    else row.style.display = '';
+  }
+</script>
+<h4><%= t('available_product_locations') %></h4>
+<table class="index">
+	<thead>
+		<tr>
+			<th><%= t("name") %></th>
+			<th><%= t("path") %></th>
+			<th><%= t("action") %></th>
+		</tr>
+	</thead>
+	<tbody>
+    <% @available_product_locations.each do |product_location| %>
+      <tr id="<%= dom_id(product_location) %>">
+        <td><%= product_location.name %></td>
+        <td><%= product_location_path product_location %></td>
+		    <td class="actions">
+          <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(product_location, :spinner)}" %>		    
+		      <%= link_to_remote icon('add') + ' ' + t('select'), 
+		                         {:url => select_admin_product_product_location_path(@product, product_location),
+		                         :loading => "jQuery('##{dom_id(product_location, :spinner)}').show()",
+		                         :update => 'selected-product_locations',
+		                         :complete => "jQuery('##{dom_id(product_location)}').remove(); jQuery('##{dom_id(product_location, :spinner)}').hide();"}, :class => 'iconlink' %>
+		    </td>        
+      </tr>
+    <% end %>
+    <% if @available_product_locations.empty? %>
+     <tr><td colspan="3"><%= t('no_match_found') %>.</td></tr>
+    <% end %>
+  </tbody>
+</table>

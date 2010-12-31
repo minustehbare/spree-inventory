@@ -1,0 +1,5 @@
+llllllllllllllll
+<% form_tag admin_suppliers_url, :method => :get do %>
+  <%= text_field_tag :keywords, params[:keywords] %>
+  <%= submit_tag t(:search), :name => nil %>
+<% end %>

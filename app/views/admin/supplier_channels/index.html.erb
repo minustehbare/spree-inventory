@@ -1,0 +1,37 @@
+<%= render :partial => 'admin/shared/product_sub_menu' %>
+
+<%= render :partial => 'admin/shared/product_tabs', :locals => {:current => "Supplier Channels"} %>
+
+  <br/>
+  <p id="new_object_link">
+      <%= link_to_remote icon('add') + ' ' + t("new") + " " + t("supplier_channel"), 
+                         {:url => new_admin_product_supplier_channel_url(@product), 
+                         :method => :get,
+                         :update => "new-object",
+                         :before => "jQuery('#new_object_link').hide();", 
+                         :complete => ""}, :class => 'iconlink' %>
+  </p>
+  
+<div id="new-object"></div>
+
+<table class="index">
+	<tr >
+		<th><%= order @search, :by => :supplier_sku, :as => t("supplier_sku") %></th>
+		<th><%= order @search, :by => :supplier, :as => t("supplier") %></th>
+		<th><%= order @search, :by => :cost, :as => t("cost") %></th>
+	  <th></th>
+	</tr>
+	
+	<% @collection.each do |supplier_channel| -%>
+      <tr id="<%= dom_id(supplier_channel) %>" class="<%= 'alt' if supplier_channel.is_default -%>" >
+      	<td><%= link_to supplier_channel.supplier_sku, edit_admin_product_supplier_channel_url(parent_object, supplier_channel) %></td>
+      	<td><%= supplier_channel.supplier.name -%></td>
+      	<td><%= "$%.2f" % supplier_channel.cost %></td>
+        <td><%= link_to_delete(supplier_channel) %><br/>
+        <%= link_to_edit(supplier_channel) %><br/>
+        <%= link_to_with_icon('tick', t("set_default"), set_default_admin_product_supplier_channel_path(parent_object, supplier_channel)) -%>
+        
+        </td>
+      </tr>
+  <% end -%>
+</table>

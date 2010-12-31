@@ -1,0 +1,29 @@
+<%- counter = params[:counter] || 0 -%>
+
+<div class="sub-locations-box">
+  <%= text_field_tag 'warehouse_location_name_' + counter.to_s %>
+  <%= hidden_field_tag 'warehouse_location_id_' + counter.to_s  -%>
+  <%= link_to image_tag('update.png'), '#', :id => 'find-new-locations-' + counter.to_s, :class => 'find-new-locations' -%>
+</div>
+
+<%- javascript_tag do -%>
+  var location_data = <%= @possible_locations.collect{|x| {'name' => x.name, 'id' => x.id}}.to_json -%>;
+  jQuery(document).ready(function(){
+    $("#warehouse_location_name_<%= counter -%>").autocomplete(location_data,{
+      formatItem: function(item) {
+        return item.name;
+      }
+    }).result(function(event, item) {
+      $('#warehouse_location_id_<%= counter -%>').val(item.id);
+    });
+    
+    $('.find-new-locations').click(function(){
+      $('#drop-zone-<%= counter -%>').load("/admin/warehouse_locations/find_sub_locations?parent_id=" +  $('#warehouse_location_id_<%= counter -%>').val() + '&counter=<%= (counter.to_i + 1).to_s -%>',"", function () {
+        // reserved for future callbacks
+      });
+      return false;
+    });
+  });
+<%- end -%>
+
+<div id="drop-zone-<%= counter -%>"></div>

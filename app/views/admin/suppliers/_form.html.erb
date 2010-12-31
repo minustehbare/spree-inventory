@@ -1,0 +1,63 @@
+<div class="yui-gb">
+  <div class="yui-u first">
+    
+     <% f.field_container :name do %>
+      <%= f.label :name, t("name")%> <span class="required">*</span><br />
+      <%= f.text_field :name, :class => "fullwidth title"  %>
+      <%= f.error_message_on :name %>
+    <% end %>    
+    
+    <% f.field_container :email do %>
+      <%= f.label :email, t("email")%><br />
+      <%= f.text_field :email, :class => "fullwidth text"  %>
+      <%= f.error_message_on :email %>
+    <% end %>
+    
+  </div>
+  
+    <div class="yui-u">
+    
+    <% f.field_container :address1 do %>
+      <%= f.label :address1 , t("address1")%><br />
+      <%= f.text_field :address1 , :class => "fullwidth text"  %>
+      <%= f.error_message_on :address1 %>
+    <% end %>
+    
+    <% f.field_container :address2 do %>
+      <%= f.label :address2, t("address2")%><br />
+      <%= f.text_field :address2, :class => "fullwidth text"  %>
+      <%= f.error_message_on :address2 %>
+    <% end %>
+    
+    <% f.field_container :city do %>
+      <%= f.label :city, t("city")%><br />
+      <%= f.text_field :city, :class => "fullwidth text"  %>
+      <%= f.error_message_on :city %>
+    <% end %>
+    
+    <% f.field_container :state do %>
+      <%= f.label :state, t("state")%><br />
+      <%= f.text_field :state, :class => "fullwidth text"  %>
+      <%= f.error_message_on :state %>
+    <% end %>
+    
+    <% f.field_container :zip do %>
+      <%= f.label :zip, t("zip")%><br />
+      <%= f.text_field :zip, :class => "fullwidth text"  %>
+      <%= f.error_message_on :zip %>
+    <% end %>
+    
+    <% f.field_container :phone do %>
+      <%= f.label :phone, t("phone")%><br />
+      <%= f.text_field :phone, :class => "fullwidth text"  %>
+      <%= f.error_message_on :phone %>
+    <% end %>
+    
+    <% f.field_container :fax do %>
+      <%= f.label :fax, t("fax")%><br />
+      <%= f.text_field :fax, :class => "fullwidth text"  %>
+      <%= f.error_message_on :fax %>
+    <% end %>
+    
+  </div>
+</div>

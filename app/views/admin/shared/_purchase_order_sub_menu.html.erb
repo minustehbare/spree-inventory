@@ -1,0 +1,8 @@
+<% content_for :sub_menu do %>
+  <ul id="sub_nav">
+    <% hook :admin_purchase_order_sub_tabs do %>
+      <%= tab :suppliers %>
+    <% end %>
+  </ul>
+<% end %>
+

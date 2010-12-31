@@ -1,0 +1,29 @@
+<%= render :partial => 'admin/shared/purchase_order_sub_menu' %>
+<%= render :partial => 'admin/shared/purchase_order_tabs', :locals => {:current => "Purchase Order Details"} %>
+
+<div class="adr">
+  <h4>
+    <%= t(:supplier_address_title) %>
+  </h4>
+    <%= render :partial => 'admin/shared/supplier_details', :locals => {:supplier => @purchase_order.supplier} %>   
+</div>
+
+<div style="clear:both;"></div>
+
+<%= render :partial => "add_product" unless @purchase_order.state == "sent" %>
+
+<% hook :admin_purchase_order_edit_header do %>
+  <%=error_messages_for :purchase_order %>
+<% end %>
+
+<% hook :admin_purchase_order_edit_form do %>
+  <div id="purchase_order-form-wrapper">
+    <%= render :partial => 'form', :locals => {:purchase_order => @purchase_order} -%>
+  </div>
+<% end %>
+
+<% content_for :head do %>
+  <%= javascript_tag "var expand_variants = true; var supplier_id = " + @purchase_order.supplier_id.to_s -%>
+  <%= javascript_include_tag 'admin/purchase_orders/edit.js' -%>
+  <%= stylesheet_link_tag 'admin/edit_orders.css' %>
+<% end %>

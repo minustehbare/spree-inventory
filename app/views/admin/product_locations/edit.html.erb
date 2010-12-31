@@ -1,0 +1,11 @@
+<%= render :partial => 'admin/shared/configuration_menu' %>
+
+<h1><%= t("product_location_edit")%></h1>
+
+<% form_for(:product_location, :url => admin_product_locationomy_product_location_url, :html => { :method => :put, :multipart => true}) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+
+  <p class="form-buttons">
+    <%= button t("update") %> <%= t("or") %> <%= link_to t("cancel"), edit_admin_product_locationomy_url(@product_locationomy) %>
+  </p>
+<% end %>

@@ -1,0 +1,86 @@
+<%= render :partial => 'admin/shared/purchase_order_sub_menu' %>
+<div class='toolbar order-links'>
+  <%= button_link_to t("new_porder"), new_admin_purchase_order_url, :icon => 'add' %>
+</div>
+
+<h1><%= t("listing_porders") %></h1>
+
+<table class="index">
+	<tr>
+		<th><%= t("order_number") -%></th>
+		<th><%= t("supplier") -%></th>
+		<th><%= t("status") -%></th>
+		<th><%= t("total") -%></th>
+	  <th></th>
+	</tr>
+	
+	<% @collection.each do |purchase_order| -%>
+      <tr id="<%= dom_id(purchase_order) %>" >
+      	<td><%= link_to purchase_order.number, object_url(purchase_order) %></td>
+      	<td><%= purchase_order.supplier.name if purchase_order.supplier -%></td>
+      	<td><%= purchase_order.state  -%></td>
+      	<td><%= "$%.2f" % purchase_order.total if purchase_order.total -%></td>
+        <td><%= link_to_edit(purchase_order) %> <%= link_to_delete(purchase_order) %></td>
+      </tr>
+  <% end -%>
+</table>
+
+
+<% content_for :sidebar do %>
+<div class="box">
+  <h3><%= t(:search) %></h3>
+
+  <% form_for @search do |f| %>
+    <%- locals = {:f => f} -%>
+    <% hook :admin_purchase_orders_index_search, locals do %>
+      <label><%= t("created_date_range") %></label><br />
+      <div class="yui-g date-range-filter">
+        <div class="yui-u sub-field first">
+          <%= f.unobtrusive_date_text_picker :created_at_after %><br />
+          <label class="sub"><%= t("start") %></label>
+        </div>
+        <div class="yui-u sub-field">
+          <%= f.unobtrusive_date_text_picker :created_at_before %><br />
+          <label><%= t("stop") %></label>
+        </div>
+      </div>
+      
+      <label><%= t("sent_date_range") %></label><br />
+      <div class="yui-g date-range-filter">
+        <div class="yui-u sub-field first">
+          <%= f.unobtrusive_date_text_picker :sent_at_after %><br />
+          <label class="sub"><%= t("start") %></label>
+        </div>
+        <div class="yui-u sub-field">
+          <%= f.unobtrusive_date_text_picker :sent_at_before %><br />
+          <label><%= t("stop") %></label>
+        </div>
+      </div>
+      
+      <label><%= t("received_date_range") %></label><br />
+      <div class="yui-g date-range-filter">
+        <div class="yui-u sub-field first">
+          <%= f.unobtrusive_date_text_picker :received_at_after %><br />
+          <label class="sub"><%= t("start") %></label>
+        </div>
+        <div class="yui-u sub-field">
+          <%= f.unobtrusive_date_text_picker :received_at_before %><br />
+          <label><%= t("stop") %></label>
+        </div>
+      </div>
+
+      <p><label><%= t("status") %></label><br />
+      <%= f.select :state_equals, PurchaseOrder.state_machines[:state].states.collect {|s| [t(s.name), s.value]}, {:include_blank => true} %></p>
+
+      <p>
+        <label><%= t 'supplier' %></label><br />
+        <%= f.text_field :supplier_name_contains, :size=>25 %>
+      </p>
+
+    <% end %>
+    <% hook :admin_purchase_orders_index_search_buttons, locals do %>
+      <p><%= button t("search") %></p>
+    <% end %>
+  <% end %>
+</div>
+<% end %>

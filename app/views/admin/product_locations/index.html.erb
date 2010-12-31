@@ -1,0 +1,16 @@
+<%= render :partial => 'admin/shared/product_sub_menu' %>
+<%= render :partial => 'admin/shared/product_tabs', :locals => {:current => "Inventory"} %>
+
+<div id="selected-product_locations">
+  <%= render :partial => "product_location_table", :locals => {:collection => @collection} %>
+</div>
+
+<h3>Add this product to an existing location</h3>
+Start by typing in the name of the warehouse in the field below.
+<%= render :partial => '/admin/warehouse_locations/location_finder' -%>
+
+
+
+<br/>
+<div id="search_hits"></div>
+

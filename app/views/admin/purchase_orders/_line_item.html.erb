@@ -1,0 +1,17 @@
+
+<tr id="<%= dom_id(f.object) %>">
+  <%- locals = {:f => f} -%>
+
+    <td width="300"><%=f.object.variant.product.name-%> <%= "(" + variant_options(f.object.variant) + ")" unless f.object.variant.option_values.empty? %></td>
+    <td valign="top" class="cost">$<%= f.text_field :cost, :style => "width:70px;", :class => "cost" %></td>
+    <td valign="top" class="qty"><%=f.text_field :qty, :style => "width:30px;", :class => "qty" %></td>
+    <td valign="top" class="total"><%= number_to_currency (f.object.cost * f.object.qty)-%></td>
+
+  <td>
+
+      <%= link_to_delete f.object, {:url => admin_purchase_order_purchase_line_item_url(@purchase_order.number, f.object),
+                                    :dataType => "html" ,
+                                    :success => "function(r){ jQuery('#purchase_order-form-wrapper').html(r);}"} %>
+
+  </td>
+</tr>

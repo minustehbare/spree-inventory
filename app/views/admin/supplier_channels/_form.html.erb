@@ -1,0 +1,42 @@
+<div class="yui-gb">
+
+  <div class="yui-u first">    <fieldset>
+    <%- locals = {:f => f} -%>
+    <% hook :admin_products_supplier_channels_form_left, locals do %>
+    
+      <%- if @object.new_record? -%>
+      <% f.field_container :supplier_id do %>
+        <%= f.label :supplier_id, t("name") %> <span class="required">*</span><br />
+        (<%= t("not_seeing_desired") -%> <%= link_to t("create_it"), admin_suppliers_path, {:target => "_blank"} -%>)<br/>
+        <%= f.select :supplier_id, @suppliers,{}, :class => 'fullwidth dropdown'  %>
+        <%= f.error_message_on :supplier_id %>
+      <% end %>
+      <%- end -%>
+
+      <% f.field_container :supplier_sku do %>
+        <%= f.label :supplier_sku, t("supplier_sku") %> <span class="required">*</span><br />
+        <%= f.text_field :supplier_sku, :class => 'fullwidth text'  %>
+        <%= f.error_message_on :supplier_sku %>
+      <% end %>
+      
+      <% f.field_container :cost do %>
+        <%= f.label :cost, t("cost") %> <span class="required">*</span><br />
+        <%= f.text_field :cost, :class => 'fullwidth text'  %>
+        <%= f.error_message_on :cost %>
+      <% end %>
+      
+      <% f.field_container :is_default do %>
+        <%  -%>
+        <%= f.check_box :is_default, (@product.supplier_channels.empty? ? {:disabled => true, :checked => true} : {}) %>
+        <%= f.label :is_default, t("default") %> 
+        <%= f.error_message_on :is_default %>
+      <% end %>
+    <% end %>
+    </fieldset>
+  </div>
+  
+    <div class="yui-u"></div>
+    <div class="yui-u"></div>
+
+
+</div>
