@@ -1,6 +1,5 @@
 class Admin::PurchaseOrdersController < Admin::BaseController
   resource_controller
-    
   before_filter :load_data, :only => [:new, :edit, :create, :update]
 
   edit.after do
@@ -25,7 +24,7 @@ class Admin::PurchaseOrdersController < Admin::BaseController
     # The order of the search not Order
     @search.order ||= "descend_by_created_at"
 
-    @collection = @search.paginate(:include  => [:supplier, :purchase_line_items],
+    @collection = @search.do_search.paginate(:include  => [:supplier, :purchase_line_items],
                                    :per_page => 30,
                                    :page     => params[:page])
   end

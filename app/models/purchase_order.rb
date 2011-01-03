@@ -85,7 +85,7 @@ class PurchaseOrder < ActiveRecord::Base
   end
   
   def self.order_more_of(variant, qty)
-    purchase_order = PurchaseOrder.find_or_create_by_supplier_id_and_status(variant.default_supplier, 'in_progress')
+    purchase_order = PurchaseOrder.find_or_create_by_supplier_id_and_status(variant.default_supplier.id, 'in_progress')
     purchase_order.add_variant(variant, qty)
   end
 
