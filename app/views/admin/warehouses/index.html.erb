@@ -1,0 +1,31 @@
+<div class='toolbar order-links'>
+  <%= button_link_to t("new_warehouse"), new_admin_warehouse_url, :icon => 'add' %>
+</div>
+
+<h1><%= t("listing_warehouses") %></h1>
+
+<table class="index">
+  <tr>
+    <th><%= t("name") -%></th>
+    <th><%= t("address_1") -%></th>
+    <th><%= t("address_2") -%></th>
+		<th><%= t("city") -%></th>
+		<th><%= t("state") -%></th>
+		<th><%= t("zip_code") -%></th>
+		<th></th>
+  </tr>
+  
+  <% @collection.each do |warehouse| -%>
+    <tr id="<%= dom_id(warehouse) %>" >
+    	<td><%= link_to warehouse.name, object_url(warehouse) %></td>
+    	<td><%= warehouse.address1 -%></td>
+    	<td><%= warehouse.address2 if warehouse.address2 -%></td>
+    	<td><%= warehouse.city  -%></td>
+    	<td><%= warehouse.state -%></td>
+    	<td><%= warehouse.zip -%></td>
+      <td><%= link_to_edit(warehouse) %> <%= link_to_delete(warehouse) %></td>
+    </tr>
+  <% end -%>
+</table>
+
+

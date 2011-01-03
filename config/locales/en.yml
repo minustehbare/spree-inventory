@@ -4,3 +4,10 @@ en:
   listing_purchase_orders: Listing Purchase Orders
   new_purchase_order: New Purchase Order
   warehouses: Warehouses
+  listing_warehouses: Listing Warehouses
+  new_warehouse: New Warehouse
+  zip_code: Zip Code
+  address_1: Address 1
+  address_2: Address2
+  purchase_order: Purchase Order
+  

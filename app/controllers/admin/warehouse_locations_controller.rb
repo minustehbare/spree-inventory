@@ -9,5 +9,4 @@ class Admin::WarehouseLocationsController < Admin::BaseController
   def load_data
     @possible_locations = WarehouseLocation.parent_id_eq(params[:parent_id] || nil).all
   end
-  
 end

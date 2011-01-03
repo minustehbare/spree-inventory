@@ -1,7 +1,7 @@
 <%= render :partial => 'admin/shared/purchase_order_sub_menu' %>
 <%= render :partial => 'admin/shared/purchase_order_tabs', :locals => {:current => "Purchase Order Details"} %>
 
-  <h2><%= t("new_porder")%></h2>
+  <h2><%= t("new_purchase_order")%></h2>
   <%=error_messages_for :purchase_order %>
   
   <% form_for(:purchase_order, :url => collection_url) do |f| %>
